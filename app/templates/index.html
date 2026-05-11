@@ -2,27 +2,118 @@
 <html lang="en">
 <head>
     <meta charset="UTF-8">
-    <title>NTI x iVolve Graduation Project</title>
-    <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;600&display=swap" rel="stylesheet">
+    <title>DevOps Graduation Project</title>
     <link rel="stylesheet" href="{{ url_for('static', filename='style.css') }}">
 </head>
 <body>
-    <div class="container">
-        <div class="content">
-            <h1 class="title">DevOps Graduation Project</h1>
-            <h2 class="subtitle">In Collaboration with iVolve Technologies</h2>
-            <div class="logos">
-                <img src="{{ url_for('static', filename='logos/nti-logo.png') }}" alt="NTI Logo" class="logo nti">
-                <img src="{{ url_for('static', filename='logos/ivolve-logo.png') }}" alt="iVolve Logo" class="logo ivolve">
+
+<div class="page">
+
+    <section class="hero">
+        <div class="hero-text">
+            <div class="badge">
+                <span></span>
+                NTI DevOps Track Graduation Project
             </div>
-            <p class="description">
-                This project represents the culmination of the DevOps training track at the National Telecommunication Institute (NTI), in partnership with iVolve Technologies.
+
+            <h1>
+                DevOps
+                <strong>Graduation</strong>
+                <strong>Project</strong>
+            </h1>
+
+            <h2>In Collaboration with <b>iVolve Technologies</b></h2>
+
+            <p>
+                This project represents the culmination of the DevOps training track at the
+                <mark>National Telecommunication Institute (NTI)</mark>,
+                in partnership with iVolve Technologies.
             </p>
         </div>
-        <footer>
-            © 2025 NTI DevOps Track & iVolve Technologies
-        </footer>
-    </div>
+
+        <div class="cloud-card">
+            <div class="circle circle-one"></div>
+            <div class="circle circle-two"></div>
+
+            <div class="cloud-shape">
+                <div></div>
+                <div></div>
+                <div></div>
+            </div>
+
+            <div class="infinity">∞</div>
+
+            <div class="float-icon top-left">🐳</div>
+            <div class="float-icon top-right">☸️</div>
+            <div class="float-icon bottom-left">🔐</div>
+            <div class="float-icon bottom-right">⚙️</div>
+        </div>
+    </section>
+
+    <section class="main-grid">
+
+        <div class="tools-panel">
+            <div class="section-title">
+                <span></span>
+                Tools & Technologies
+                <span></span>
+            </div>
+
+            <div class="tools-grid">
+                <div class="tool"><div class="icon docker">🐳</div><p>Docker</p></div>
+                <div class="tool"><div class="icon k8s">☸</div><p>Kubernetes</p></div>
+                <div class="tool"><div class="icon terraform">T</div><p>Terraform</p></div>
+                <div class="tool"><div class="icon ansible">A</div><p>Ansible</p></div>
+                <div class="tool"><div class="icon jenkins">J</div><p>Jenkins</p></div>
+                <div class="tool"><div class="icon argocd">∞</div><p>ArgoCD</p></div>
+                <div class="tool"><div class="icon aws">aws</div><p>AWS</p></div>
+                <div class="tool"><div class="icon ecr">E</div><p>ECR</p></div>
+                <div class="tool"><div class="icon github">GH</div><p>GitHub</p></div>
+                <div class="tool"><div class="icon trivy">🛡</div><p>Trivy</p></div>
+            </div>
+        </div>
+
+        <div class="people-panel">
+
+            <div class="person-card">
+                <div class="avatar">HS</div>
+                <div>
+                    <h4> </h4>
+                    <h3>Hossam Saber</h3>
+                    <p>Cloud DevOps Trainee</p>
+                </div>
+            </div>
+
+            <div class="person-card">
+                <div class="avatar">IA</div>
+                <div>
+                    <h4>👨‍🏫 Instructor</h4>
+                    <h3>Ibrahim Adel</h3>
+                    <p>DevOps Engineer | Mentor | Instructor</p>
+                </div>
+            </div>
+
+        </div>
+
+    </section>
+
+    <section class="footer-card">
+        <div class="brand">
+            <img src="{{ url_for('static', filename='logos/nti-logo.png') }}" alt="NTI Logo">
+        </div>
+
+        <div class="quote">
+            “Building the Future,<br>
+            One <span>Deployment</span> at a Time.”
+        </div>
+
+        <div class="brand right">
+            <small>In Collaboration with</small>
+            <img src="{{ url_for('static', filename='logos/ivolve-logo.png') }}" alt="iVolve Logo">
+        </div>
+    </section>
+
+</div>
+
 </body>
 </html>
-
