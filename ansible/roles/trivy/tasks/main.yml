@@ -1,0 +1,21 @@
+---
+- name: Add Trivy repository key
+  ansible.builtin.shell: |
+    wget -qO - https://aquasecurity.github.io/trivy-repo/deb/public.key | gpg --dearmor -o /usr/share/keyrings/trivy.gpg
+  args:
+    creates: /usr/share/keyrings/trivy.gpg
+
+- name: Add Trivy apt repository
+  ansible.builtin.apt_repository:
+    repo: "deb [signed-by=/usr/share/keyrings/trivy.gpg] https://aquasecurity.github.io/trivy-repo/deb generic main"
+    state: present
+    filename: trivy
+
+- name: Update apt cache after adding Trivy repository
+  ansible.builtin.apt:
+    update_cache: true
+
+- name: Install Trivy
+  ansible.builtin.apt:
+    name: trivy
+    state: present

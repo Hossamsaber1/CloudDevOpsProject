@@ -1,0 +1,23 @@
+---
+plugin: amazon.aws.aws_ec2
+
+# Change this region to the same AWS region used in Terraform.
+regions:
+  - eu-north-1
+
+# The EC2 instance must have this tag from Terraform:
+# Role = jenkins
+filters:
+  tag:Role: jenkins
+  instance-state-name: running
+
+# Use public IP because Jenkins EC2 is expected to be in a public subnet.
+hostnames:
+  - ip-address
+
+compose:
+  ansible_host: public_ip_address
+  ansible_user: "'ubuntu'"
+
+groups:
+  jenkins_servers: "'jenkins' in tags.Role"

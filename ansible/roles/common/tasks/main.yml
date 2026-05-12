@@ -1,0 +1,23 @@
+---
+- name: Update apt cache
+  ansible.builtin.apt:
+    update_cache: true
+    cache_valid_time: 3600
+
+- name: Install required system packages
+  ansible.builtin.apt:
+    name:
+      - curl
+      - wget
+      - gnupg
+      - ca-certificates
+      - unzip
+      - software-properties-common
+      - apt-transport-https
+      - lsb-release
+    state: present
+
+- name: Install Java 17 for Jenkins
+  ansible.builtin.apt:
+    name: openjdk-17-jdk
+    state: present
