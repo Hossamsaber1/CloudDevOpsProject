@@ -1,90 +1,43 @@
-resource "aws_iam_role" "eks_cluster_role" {
-  name = "${var.project_name}-eks-cluster-role"
+module "eks" {
+  source  = "terraform-aws-modules/eks/aws"
+  version = "~> 21.0"
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
-    Statement = [
-      {
-        Effect = "Allow"
-        Principal = {
-          Service = "eks.amazonaws.com"
-        }
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
-}
+  name               = "${var.project_name}-eks"
+  kubernetes_version = "1.33"
 
-resource "aws_iam_role_policy_attachment" "eks_cluster_policy" {
-  role       = aws_iam_role.eks_cluster_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSClusterPolicy"
-}
+  endpoint_public_access  = true
+  endpoint_private_access = true
 
-resource "aws_eks_cluster" "eks" {
-  name     = "${var.project_name}-eks"
-  role_arn = aws_iam_role.eks_cluster_role.arn
+  enable_cluster_creator_admin_permissions = true
 
-  vpc_config {
-    subnet_ids = var.private_subnet_ids
+  addons = {
+    coredns = {}
+    kube-proxy = {}
+    vpc-cni = {
+      before_compute = true
+    }
+    eks-pod-identity-agent = {
+      before_compute = true
+    }
   }
 
-  depends_on = [
-    aws_iam_role_policy_attachment.eks_cluster_policy
-  ]
-}
-resource "aws_iam_role" "eks_node_role" {
-  name = "${var.project_name}-eks-node-role"
+  vpc_id                   = var.vpc_id
+  subnet_ids               = var.private_subnet_ids
+  control_plane_subnet_ids = var.cluster_subnet_ids
 
-  assume_role_policy = jsonencode({
-    Version = "2012-10-17"
+  eks_managed_node_groups = {
+    workers = {
+      ami_type       = "AL2023_x86_64_STANDARD"
+      instance_types = ["t3.medium"]
 
-    Statement = [
-      {
-        Effect = "Allow"
-
-        Principal = {
-          Service = "ec2.amazonaws.com"
-        }
-
-        Action = "sts:AssumeRole"
-      }
-    ]
-  })
-}
-
-resource "aws_iam_role_policy_attachment" "worker_node_policy" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKSWorkerNodePolicy"
-}
-
-resource "aws_iam_role_policy_attachment" "cni_policy" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEKS_CNI_Policy"
-}
-
-resource "aws_iam_role_policy_attachment" "ecr_policy" {
-  role       = aws_iam_role.eks_node_role.name
-  policy_arn = "arn:aws:iam::aws:policy/AmazonEC2ContainerRegistryReadOnly"
-}
-
-resource "aws_eks_node_group" "workers" {
-  cluster_name    = aws_eks_cluster.eks.name
-  node_group_name = "${var.project_name}-workers"
-  node_role_arn   = aws_iam_role.eks_node_role.arn
-
-  subnet_ids = var.private_subnet_ids
-
-  scaling_config {
-    desired_size = 2
-    max_size     = 2
-    min_size     = 2
+      min_size     = 2
+      max_size     = 2
+      desired_size = 2
+    }
   }
 
-  instance_types = ["t3.medium"]
-
-  depends_on = [
-    aws_iam_role_policy_attachment.worker_node_policy,
-    aws_iam_role_policy_attachment.cni_policy,
-    aws_iam_role_policy_attachment.ecr_policy
-  ]
+  tags = {
+    Project   = var.project_name
+    Terraform = "true"
+  }
 }
