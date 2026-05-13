@@ -1,0 +1,24 @@
+apiVersion: argoproj.io/v1alpha1
+kind: Application
+metadata:
+  name: ivolve-app
+  namespace: argocd
+spec:
+  project: default
+
+  source:
+    repoURL: https://github.com/Hossamsaber1/CloudDevOpsProject.git
+    targetRevision: dev
+    path: k8s/base
+
+  destination:
+    server: https://kubernetes.default.svc
+    namespace: ivolve
+
+  syncPolicy:
+    automated:
+      prune: true
+      selfHeal: true
+
+    syncOptions:
+      - CreateNamespace=true
