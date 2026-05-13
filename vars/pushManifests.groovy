@@ -1,17 +1,15 @@
 def call() {
 
-    sh """
+    sh '''
         git config user.email "jenkins@clouddevops.local"
         git config user.name "Jenkins CI"
 
-        git remote set-url origin \
-        https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/Hossamsaber1/CloudDevOpsProject.git
+        git checkout -B dev
 
         git add k8s/base/deployment.yaml
 
-        git commit -m "Update Kubernetes image tag to build ${BUILD_NUMBER}" \
-        || echo "No changes to commit"
+        git commit -m "Update Kubernetes image tag to build ${BUILD_NUMBER}" || echo "No changes to commit"
 
-        git push origin dev
-    """
+        git push https://${GITHUB_USERNAME}:${GITHUB_TOKEN}@github.com/Hossamsaber1/CloudDevOpsProject.git dev
+    '''
 }
