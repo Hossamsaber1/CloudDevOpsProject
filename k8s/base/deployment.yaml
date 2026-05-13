@@ -44,7 +44,7 @@ spec:
       containers:
         - name: ivolve-app
 
-          image: nginx:1.27-alpine
+          image: 214743469339.dkr.ecr.eu-north-1.amazonaws.com/clouddevopsproject-repo:7
 
           imagePullPolicy: IfNotPresent
 
