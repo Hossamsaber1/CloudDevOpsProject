@@ -10,6 +10,8 @@
     name: docker
     enabled: true
     state: started
+  async: 60  # يسمح للمهمة بالعمل في الخلفية لمدة 60 ثانية
+  poll: 5
 
 - name: Add ubuntu user to docker group
   ansible.builtin.user:

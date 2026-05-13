@@ -17,7 +17,7 @@
       - lsb-release
     state: present
 
-- name: Install Java 17 for Jenkins
+- name: Install Java 21 for Jenkins
   ansible.builtin.apt:
-    name: openjdk-17-jdk
+    name: openjdk-21-jdk
     state: present
