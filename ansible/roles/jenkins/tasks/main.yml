@@ -46,3 +46,27 @@
 - name: Show initial Jenkins admin password path
   ansible.builtin.debug:
     msg: "Initial Jenkins password is stored on the EC2 instance at /var/lib/jenkins/secrets/initialAdminPassword"
+
+- name: Download AWS CLI v2
+  ansible.builtin.get_url:
+    url: https://awscli.amazonaws.com/awscli-exe-linux-x86_64.zip
+    dest: /tmp/awscliv2.zip
+    mode: '0644'
+
+- name: Unzip AWS CLI package
+  ansible.builtin.unarchive:
+    src: /tmp/awscliv2.zip
+    dest: /tmp/
+    remote_src: true
+
+- name: Install AWS CLI
+  ansible.builtin.command:
+    cmd: /tmp/aws/install
+  args:
+    creates: /usr/local/bin/aws
+
+- name: Create symbolic link for AWS CLI
+  ansible.builtin.file:
+    src: /usr/local/bin/aws
+    dest: /usr/bin/aws
+    state: link
