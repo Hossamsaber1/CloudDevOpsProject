@@ -8,10 +8,21 @@ pipeline {
         AWS_REGION = 'eu-north-1'
         ECR_REPO = 'clouddevopsproject'
         IMAGE_TAG = "${BUILD_NUMBER}"
-        IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
     }
 
     stages {
+        stage('Prepare Environment') {
+            steps {
+                withCredentials([
+                    string(credentialsId: 'AWS_ACCOUNT_ID', variable: 'AWS_ACCOUNT_ID')
+                ]) {
+                    script {
+                        env.IMAGE_URI = "${AWS_ACCOUNT_ID}.dkr.ecr.${AWS_REGION}.amazonaws.com/${ECR_REPO}:${IMAGE_TAG}"
+                    }
+                }
+            }
+        }
+
         stage('Build Image') {
             steps {
                 buildImage("${IMAGE_URI}")
@@ -26,7 +37,15 @@ pipeline {
 
         stage('Push Image') {
             steps {
-                pushImage("${IMAGE_URI}", "${AWS_REGION}")
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'AWS_CREDENTIALS',
+                        usernameVariable: 'AWS_ACCESS_KEY_ID',
+                        passwordVariable: 'AWS_SECRET_ACCESS_KEY'
+                    )
+                ]) {
+                    pushImage("${IMAGE_URI}", "${AWS_REGION}")
+                }
             }
         }
 
@@ -44,7 +63,15 @@ pipeline {
 
         stage('Push Manifests') {
             steps {
-                pushManifests()
+                withCredentials([
+                    usernamePassword(
+                        credentialsId: 'GITHUB_CREDENTIALS',
+                        usernameVariable: 'GITHUB_USERNAME',
+                        passwordVariable: 'GITHUB_TOKEN'
+                    )
+                ]) {
+                    pushManifests()
+                }
             }
         }
     }

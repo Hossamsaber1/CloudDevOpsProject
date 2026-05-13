@@ -48,5 +48,7 @@ resource "aws_instance" "jenkins" {
 
   tags = {
     Name = "${var.project_name}-jenkins"
+    Role = "jenkins"
+
   }
 }
