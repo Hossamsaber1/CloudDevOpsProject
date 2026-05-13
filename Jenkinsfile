@@ -6,7 +6,7 @@ pipeline {
     environment {
         APP_NAME = 'ivolve-app'
         AWS_REGION = 'eu-north-1'
-        ECR_REPO = 'clouddevopsproject-repo
+        ECR_REPO = 'clouddevopsproject-repo'
         IMAGE_TAG = "${BUILD_NUMBER}"
     }
 
