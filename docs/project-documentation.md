@@ -44,7 +44,9 @@ The project includes:
 
 ---
 
-# Architecture Overview
+# Architecture Diagram
+
+![Project Architecture](screenshot/project-architecture.png)
 
 ```text
 Developer
@@ -242,6 +244,30 @@ Responsible for creating:
 
 # Terraform Backend
 
+# AWS Infrastructure
+
+## Amazon S3 Backend
+
+![Amazon S3 Backend](screenshot/aws/aws-s3-backend.png)
+
+---
+
+## DynamoDB State Locking
+
+![DynamoDB](screenshot/aws/aws-dynamodb-locks.png)
+
+---
+
+## Amazon EKS Cluster
+
+![Amazon EKS Cluster](screenshot/aws/aws-eks-cluster.png)
+
+---
+
+## EKS Node Group
+
+![EKS Node Group Active](screenshot/aws/aws-eks-nodegroup-active.png)
+
 Terraform remote state backend configured using:
 
 ```text
@@ -264,7 +290,19 @@ terraform init
 terraform plan
 ```
 
-## Apply Infrastructure
+# Terraform Infrastructure
+
+## Terraform Plan
+
+![Terraform Plan](screenshot/terraform/terraform-plan.png)
+
+---
+
+## Terraform Apply
+
+![Terraform Apply](screenshot/terraform/terraform-apply-01.png)
+
+![Terraform Apply 02](screenshot/terraform/terraform-apply-02.png)
 
 ```bash
 terraform apply
@@ -300,6 +338,24 @@ AWS EC2 Dynamic Inventory used for automatic host discovery.
 ---
 
 # Execute Playbook
+
+# Jenkins Configuration
+
+## Jenkins Installation
+
+![Jenkins Installation](screenshot/jenkins/jenkins-installation.png)
+
+---
+
+## Jenkins Admin User
+
+![Jenkins Admin User](screenshot/jenkins/jenkins-admin-user.png)
+
+---
+
+## Jenkins URL Configuration
+
+![Jenkins URL](screenshot/jenkins/jenkins-url-config.png)
 
 ```bash
 ANSIBLE_CONFIG=$PWD/ansible.cfg ansible-playbook playbooks/jenkins.yml
@@ -363,7 +419,29 @@ kubectl apply -f k8s/base/
 
 ---
 
-# Verify Kubernetes Resources
+# Kubernetes Verification
+
+## kubectl get nodes
+
+![kubectl get nodes](screenshot/kubernetes/kubectl-get-nodes.png)
+
+---
+
+## kubectl get all
+
+![kubectl get all](screenshot/kubernetes/kubectl-get-all.png)
+
+---
+
+## kubectl get pods
+
+![kubectl get pods](screenshot/kubernetes/kubectl-get-pods.png)
+
+---
+
+## kubectl get ingress
+
+![kubectl get ingress](screenshot/kubernetes/kubectl-get-ingress.png)
 
 ## Verify Pods
 
@@ -393,8 +471,19 @@ Implement CI pipeline using Jenkins.
 
 ---
 
-# Jenkins Pipeline Stages
 
+
+# Jenkins Pipeline Results
+
+## Successful Pipeline
+
+![Pipeline Success](screenshot/jenkins/jenkins-pipeline-success.png)
+
+---
+
+## Pipeline Failure Example
+
+![Pipeline Failure](screenshot/jenkins/jenkins-pipeline-failed.png)
 ## 1. Build Image
 
 Build Docker image.
@@ -523,7 +612,17 @@ AWS Application Load Balancer (ALB)
 
 ---
 
-# Verify ArgoCD
+# ArgoCD Dashboard
+
+## ArgoCD Login
+
+![ArgoCD Login](screenshot/argocd/argocd-login.png)
+
+---
+
+## ArgoCD Dashboard
+
+![ArgoCD Dashboard](screenshot/argocd/argocd-dashboard.png)
 
 ```bash
 kubectl get applications -n argocd
@@ -566,7 +665,25 @@ Developer
 
 ---
 
-# Final Result
+# Application Deployment
+
+## Application Homepage
+
+![Application Homepage](screenshot/application/application-homepage.png)
+
+---
+
+## Live Application
+
+![Live Application](screenshot/application/application-live-01.png)
+
+![Live Application 02](screenshot/application/application-live-02.png)
+
+---
+
+## Curl Validation
+
+![Curl Validation](screenshot/application/curl-validation.png)
 
 Successfully implemented:
 
