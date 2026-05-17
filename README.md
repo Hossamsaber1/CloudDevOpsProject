@@ -27,7 +27,7 @@ This project simulates a real-world enterprise deployment workflow starting from
 
 The following architecture represents the complete DevOps workflow implemented in this project.
 
-![Project Architecture](screenshot/project-architecture.png)
+![Project Architecture](./screenshot/project-architecture.png)
 
 ---
 
